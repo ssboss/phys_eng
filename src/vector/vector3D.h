@@ -13,10 +13,10 @@ namespace Physics{
         friend Vector3D operator/(double x, Vector3D const& vect);
         friend std::ostream& operator<<(std::ostream& os, const Vector3D& v);
 
-        Vector3D& operator+=(Vector3D& const vect);
-        Vector3D& operator-=(Vector3D& const vect);
-        float magnitude();
-        Vector3D& norm(Vector3D& const vect);
+        Vector3D& operator+=(const Vector3D& vect);
+        Vector3D& operator-=(const Vector3D& vect);
+        float magnitude() const;
+        Vector3D norm(const Vector3D& vect);
 
         double x,y,z;
     };

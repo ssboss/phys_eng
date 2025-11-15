@@ -9,7 +9,7 @@ int main(){
     Physics::Particle* new_particle {new Physics::Particle({0.0,0.0,0.0}, gravity, 5.0)};
     double dt = 0.01;
     for(double i{0.00}; i < 10.00; i+=dt){
-        step(i, new_particle);
+        Physics::step(i, new_particle);
         std::cout << "Force: " << new_particle->getForce() << "\nnew position: " << new_particle->getCurrPos() << " prev position: " << new_particle->getPrevPos();
     }
 }

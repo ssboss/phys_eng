@@ -1,4 +1,4 @@
-#include "vector.h"
+#include "vector3D.h"
 #include <cmath>
 
 namespace Physics{
@@ -14,23 +14,26 @@ namespace Physics{
 
 	Vector3D operator/(double x, Vector3D const& vect2){ return {Vector3D(vect2.x / x, vect2.y / x, vect2.z / x)}; }
 
-	Vector3D& Vector3D::operator+=(Vector3D& const vect){ 
-		Vector3D res {Vector3D(x + vect.x, y + vect.y, z + vect.z) };
-		return res;
+	Vector3D& Vector3D::operator+=(const Vector3D& vect){ 
+		this->x += vect.x;
+		this->y += vect.y;
+		this->z += vect.z;
+		return *this;
 	}
 
-	Vector3D& Vector3D::operator-=(Vector3D& const vect){ 
-		Vector3D res {Vector3D(x - vect.x, y - vect.y, z - vect.z) };
-		return res;
+	Vector3D& Vector3D::operator-=(const Vector3D& vect){
+		this->x -= vect.x;
+		this->y -= vect.y;
+		this->z -= vect.z;
+		return *this; 
 	}
 
-	float Vector3D::magnitude(){
+	float Vector3D::magnitude() const{
 		return sqrt((x * x) + (y * y) + (z * z));
 	}
 
-	Vector3D& Vector3D::norm(Vector3D& const vect){
-		Vector3D normalized{Vector3D(vect.x / vect.magnitude(), vect.y / vect.magnitude(), vect.z / vect.magnitude())};
-		return normalized;
+	Vector3D Vector3D::norm(const Vector3D& vect){
+		return Vector3D(vect.x / vect.magnitude(), vect.y / vect.magnitude(), vect.z / vect.magnitude());
 	}
 
 	std::ostream& operator<<(std::ostream& os, const Vector3D& v) {

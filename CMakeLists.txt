@@ -1,4 +1,4 @@
-cmake_minimum_required(3.31)
+cmake_minimum_required(VERSION 3.31)
 
 # Proj Name, better name pending
 project(physics_engine
@@ -12,7 +12,7 @@ add_subdirectory(src)
 include(CTest)
 
 if(BUILD_TESTING)
-    add_subdirectory(testing)
+    add_subdirectory(src/testing)
 endif()
 
 # else()

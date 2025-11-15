@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.31)
+
 set(SOURCES
     particle/particle.cpp
     physics/kinematics.cpp
@@ -12,4 +14,4 @@ set(HEADERS
 
 add_library(engine_math ${SOURCES} ${HEADERS})
 
-target_include_directories(${LIBRARY_OUTPUT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(engine_math PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
