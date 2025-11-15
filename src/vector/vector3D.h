@@ -9,6 +9,8 @@ namespace Physics{
         ~Vector3D();
         friend Vector3D operator+(Vector3D const& vect1, Vector3D const& vect2);
         friend Vector3D operator-(Vector3D const& vect1, Vector3D const& vect2);
+        friend Vector3D operator*(Vector3D const& vect, double x);
+        friend Vector3D operator/(Vector3D const& vect, double x);
         friend Vector3D operator*(double x, Vector3D const& vect);
         friend Vector3D operator/(double x, Vector3D const& vect);
         friend std::ostream& operator<<(std::ostream& os, const Vector3D& v);

@@ -6,13 +6,17 @@ namespace Physics{
 
 	Vector3D::~Vector3D(){};
 
-	Vector3D operator+(Vector3D const& vect1, Vector3D const& vect2){ return {Vector3D(vect1.x + vect2.x, vect1.y + vect2.y, vect1.z + vect2.z)}; }
+	Vector3D operator+(Vector3D const& vect1, Vector3D const& vect2){ return {vect1.x + vect2.x, vect1.y + vect2.y, vect1.z + vect2.z}; }
 
-	Vector3D operator-(Vector3D const& vect1, Vector3D const& vect2){ return {Vector3D(vect1.x - vect2.x, vect1.y - vect2.y, vect1.z - vect2.z)}; }
+	Vector3D operator-(Vector3D const& vect1, Vector3D const& vect2){ return {vect1.x - vect2.x, vect1.y - vect2.y, vect1.z - vect2.z}; }
 
-	Vector3D operator*(double x, Vector3D const& vect2){ return {Vector3D(x * vect2.x, x * vect2.y, x * vect2.z)}; }
+	Vector3D operator*(Vector3D const& vect2, double x){ return {vect2.x * x, vect2.y * x,vect2.z * x}; }
 
-	Vector3D operator/(double x, Vector3D const& vect2){ return {Vector3D(vect2.x / x, vect2.y / x, vect2.z / x)}; }
+	Vector3D operator/(Vector3D const& vect2, double x){ return {vect2.x / x, vect2.y / x, vect2.z / x}; }
+
+	Vector3D operator*(double x, Vector3D const& vect2){ return {vect2.x * x, vect2.y * x,vect2.z * x}; } // overloaded fxn to reflect math for my monkey brain
+
+	Vector3D operator/(double x, Vector3D const& vect2){ return {vect2.x / x, vect2.y / x, vect2.z / x}; }
 
 	Vector3D& Vector3D::operator+=(const Vector3D& vect){ 
 		this->x += vect.x;

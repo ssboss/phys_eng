@@ -10,6 +10,7 @@ namespace Physics{
             Vector3D getCurrPos(); // getters for seeing values 
             Vector3D getPrevPos();
             Vector3D getForce();
+            Vector3D getAccel();
             void modPos(Vector3D pos); // setters for inc/dec of particle values
             void modForce(Vector3D force);
             
