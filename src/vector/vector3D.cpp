@@ -1,0 +1,41 @@
+#include "vector.h"
+#include <cmath>
+
+namespace Physics{
+	Vector3D::Vector3D(double x1, double y1, double z1) : x(x1), y(y1), z(z1){};
+
+	Vector3D::~Vector3D(){};
+
+	Vector3D operator+(Vector3D const& vect1, Vector3D const& vect2){ return {Vector3D(vect1.x + vect2.x, vect1.y + vect2.y, vect1.z + vect2.z)}; }
+
+	Vector3D operator-(Vector3D const& vect1, Vector3D const& vect2){ return {Vector3D(vect1.x - vect2.x, vect1.y - vect2.y, vect1.z - vect2.z)}; }
+
+	Vector3D operator*(double x, Vector3D const& vect2){ return {Vector3D(x * vect2.x, x * vect2.y, x * vect2.z)}; }
+
+	Vector3D operator/(double x, Vector3D const& vect2){ return {Vector3D(vect2.x / x, vect2.y / x, vect2.z / x)}; }
+
+	Vector3D& Vector3D::operator+=(Vector3D& const vect){ 
+		Vector3D res {Vector3D(x + vect.x, y + vect.y, z + vect.z) };
+		return res;
+	}
+
+	Vector3D& Vector3D::operator-=(Vector3D& const vect){ 
+		Vector3D res {Vector3D(x - vect.x, y - vect.y, z - vect.z) };
+		return res;
+	}
+
+	float Vector3D::magnitude(){
+		return sqrt((x * x) + (y * y) + (z * z));
+	}
+
+	Vector3D& Vector3D::norm(Vector3D& const vect){
+		Vector3D normalized{Vector3D(vect.x / vect.magnitude(), vect.y / vect.magnitude(), vect.z / vect.magnitude())};
+		return normalized;
+	}
+
+	std::ostream& operator<<(std::ostream& os, const Vector3D& v) {
+    	os << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+    	return os;
+	}
+
+}
