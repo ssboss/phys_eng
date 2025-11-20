@@ -16,7 +16,7 @@ namespace Physics{
 
 	Vector3D operator*(double x, Vector3D const& vect2){ return {vect2.x * x, vect2.y * x,vect2.z * x}; } // overloaded fxn to reflect math for my monkey brain
 
-	Vector3D operator/(double x, Vector3D const& vect2){ return {vect2.x / x, vect2.y / x, vect2.z / x}; }
+	Vector3D operator/(double x, Vector3D const& vect2){ return {x / vect2.x, x / vect2.y, x / vect2.z}; }
 
 	Vector3D& Vector3D::operator+=(const Vector3D& vect){ 
 		this->x += vect.x;

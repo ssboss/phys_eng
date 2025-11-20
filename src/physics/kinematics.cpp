@@ -8,7 +8,7 @@
 namespace Physics {
     void step(double dt, Physics::Particle* obj){
         Physics::Vector3D new_pos {0.0,0.0,0.0};
-        new_pos = 2 * obj->getCurrPos() - obj->getPrevPos() +  (dt*dt) * obj->getForce();
+        new_pos = 2 * obj->getCurrPos() - obj->getPrevPos() +  (dt*dt) * obj->getAccel();
         obj->modPos(new_pos);
     }
 }
