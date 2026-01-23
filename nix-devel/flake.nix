@@ -36,6 +36,7 @@
             xorg.libXxf86vm
             wayland
             wayland-protocols
+            wayland-scanner
             libxkbcommon
             glew
             glm
