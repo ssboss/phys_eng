@@ -5,6 +5,8 @@
     Finished writing the object and particle classes, this is a test to try then out and test 
     1-D Kinematics before moving to 3-D implementation
 */
+
+// calculates position based on acceleration and prev pos using Verlet Integration
 namespace Physics {
     void step(double dt, Physics::Particle* obj){
         Physics::Vector3D new_pos {0.0,0.0,0.0};
