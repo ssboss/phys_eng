@@ -8,9 +8,12 @@ namespace Physics{
     Vector3D Particle::getForce(){return force;}
     Vector3D Particle::getAccel(){return force / mass;}
 
-    void Particle::modPos(Vector3D pos){
-        prev_pos = curr_pos;
-        curr_pos += pos;
+    void Particle::modCurrPos(Vector3D pos){
+        curr_pos = pos;
+    }
+
+    void Particle::modPrevPos(Vector3D pos){
+        prev_pos = pos;
     }
 
     void Particle::modForce(Vector3D added_force){force += added_force;}

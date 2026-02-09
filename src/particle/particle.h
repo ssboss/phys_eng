@@ -2,6 +2,8 @@
 
 #include "vector/vector3D.h"
 
+// custom particle object class
+
 namespace Physics{
     class Particle{
         public:
@@ -11,7 +13,8 @@ namespace Physics{
             Vector3D getPrevPos();
             Vector3D getForce();
             Vector3D getAccel();
-            void modPos(Vector3D pos); // setters for inc/dec of particle values
+            void modCurrPos(Vector3D pos); // setters for inc/dec of particle values
+            void modPrevPos(Vector3D pos);
             void modForce(Vector3D force);
             
         private:
