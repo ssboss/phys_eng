@@ -16,7 +16,7 @@ namespace Physics {
         new_pos = 2 * obj->getCurrPos() - obj->getPrevPos() +  (dt*dt) * obj->getAccel();
         obj->modCurrPos(new_pos);
         BoundaryCheck(obj);
-        }
+    }
     // checks boundary conditions and updates particle pos if it exceeds bounds of box/window
     void BoundaryCheck(Physics::Particle* obj){
         Physics::Vector3D velocity = obj->getCurrPos() - obj->getPrevPos();
