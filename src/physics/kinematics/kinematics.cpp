@@ -4,6 +4,8 @@
 int const SCREEN_WIDTH = 800;
 int const SCREEN_HEIGHT = 600;
 
+void BoundaryCheck(Physics::Particle* obj);
+
 /*
     Finished writing the object and particle classes, this is a test to try then out and test 
     1-D Kinematics before moving to 3-D implementation
