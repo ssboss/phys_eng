@@ -1,6 +1,6 @@
 #include "dynamics.h"
 namespace Physics{
-    void computeNetForce(Physics::Particle* obj, std::vector<Vector3D> forces, bool constAccel){
+    void accumulateForces(Physics::Particle* obj, std::vector<Vector3D> forces, bool constAccel){
         if (constAccel)
                 return;
 
