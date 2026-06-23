@@ -1,8 +1,6 @@
 #include "kinematics.h"
 #include <vector>
 // adding consts representing width and height of window
-int const SCREEN_WIDTH = 800;
-int const SCREEN_HEIGHT = 600;
 
 void BoundaryCheck(Physics::Particle* obj);
 
@@ -13,32 +11,41 @@ void BoundaryCheck(Physics::Particle* obj);
 
 // calculates position based on acceleration and prev pos using Verlet Integration
 namespace Physics {
-    void step(double dt, Physics::Particle* obj){
+    void step(float dt, Physics::Particle* obj, int width, int height){
         Physics::Vector3D new_pos {0.0,0.0,0.0};
         new_pos = 2 * obj->getCurrPos() - obj->getPrevPos() +  (dt*dt) * obj->getAccel();
         obj->modCurrPos(new_pos);
-        BoundaryCheck(obj);
+        BoundaryCheck(obj, width, height);
     }
     // checks boundary conditions and updates particle pos if it exceeds bounds of box/window
-    void BoundaryCheck(Physics::Particle* obj){
-        Physics::Vector3D velocity = obj->getCurrPos() - obj->getPrevPos();
-        if(obj->getCurrPos().x < 0){
-            obj->modCurrPos({0, obj->getCurrPos().y, obj->getCurrPos().z});
-            obj->modPrevPos({velocity.x + obj->getCurrPos().x, obj->getPrevPos().y, obj->getPrevPos().z});
+    void BoundaryCheck(Physics::Particle* obj, const Physics::Vector3D worldMax, const Physics::Vector3D worldMin){
+       Physics::Vector3D curr{obj->getCurrPos()};
+       Physics::Vector3D prev{obj->getPrevPos()};
+       Physics::Vector3D force{obj->getForce()};
+
+       AxisReflection(curr.x, prev.x, force.x, worldMax.x, worldMin.x);
+       AxisReflection(curr.y, prev.y, force.y, worldMax.y, worldMin.y);
+       AxisReflection(curr.z, prev.z, force.z, worldMax.z, worldMin.z);
+
+       obj->modCurrPos(curr);
+       obj->modPrevPos(prev);
+       obj->modForce(force);
+        
+    }
+
+    void AxisReflection(float& curr, float& prev, float& force, float max, float min){
+        float vel {curr - prev};
+        if(curr < min){
+            curr = min;
+            prev = curr + vel;
+            force = -1 * force;
         }
-        else if(obj->getCurrPos().x > SCREEN_WIDTH){
-            obj->modCurrPos({SCREEN_WIDTH, obj->getCurrPos().y, obj->getCurrPos().z});
-            obj->modPrevPos({velocity.x + obj->getCurrPos().x, obj->getPrevPos().y, obj->getPrevPos().z});
-        }
-        else if(obj->getCurrPos().y < 0){
-            obj->modCurrPos({obj->getCurrPos().x, 0, obj->getCurrPos().z});
-            obj->modPrevPos({obj->getPrevPos().x, obj->getPrevPos().y + velocity.y, obj->getPrevPos().z});
-        }
-        else if(obj->getCurrPos().y > SCREEN_HEIGHT){
-            obj->modCurrPos({obj->getCurrPos().x, SCREEN_HEIGHT, obj->getCurrPos().z});
-            obj->modPrevPos({obj->getPrevPos().x, obj->getPrevPos().y + velocity.y, obj->getPrevPos().z});
+        else if(curr > max){
+            curr = max;
+            prev = curr + vel;
+            force = -1 * force;
         }
     }
-    }
+}
     
 
