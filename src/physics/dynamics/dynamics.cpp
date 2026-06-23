@@ -9,6 +9,6 @@ namespace Physics{
         for(unsigned int i {0}; i < (int)forces.size(); ++i){
             netForce += forces[i];
         }
-        obj->modForce(netForce);
+        obj->modForce(netForce + obj->getForce());
     }
 }
