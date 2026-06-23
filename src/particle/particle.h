@@ -7,7 +7,7 @@
 namespace Physics{
     class Particle{
         public:
-            Particle(Vector3D present_pos, Vector3D force, double mass);
+            Particle(Vector3D present_pos, Vector3D force, float mass);
             ~Particle();
             Vector3D getCurrPos(); // getters for seeing values 
             Vector3D getPrevPos();
@@ -21,6 +21,6 @@ namespace Physics{
             Vector3D curr_pos;
             Vector3D prev_pos;
             Vector3D force;
-            double mass;
+            float mass;
     };
 }
