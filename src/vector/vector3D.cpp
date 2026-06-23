@@ -2,7 +2,7 @@
 #include <cmath>
 
 namespace Physics{
-	Vector3D::Vector3D(double x1, double y1, double z1) : x(x1), y(y1), z(z1){};
+	Vector3D::Vector3D(float x1, float y1, float z1) : x(x1), y(y1), z(z1){};
 
 	Vector3D::~Vector3D(){};
 
@@ -10,13 +10,13 @@ namespace Physics{
 
 	Vector3D operator-(Vector3D const& vect1, Vector3D const& vect2){ return {vect1.x - vect2.x, vect1.y - vect2.y, vect1.z - vect2.z}; }
 
-	Vector3D operator*(Vector3D const& vect2, double x){ return {vect2.x * x, vect2.y * x,vect2.z * x}; }
+	Vector3D operator*(Vector3D const& vect2, float x){ return {vect2.x * x, vect2.y * x,vect2.z * x}; }
 
-	Vector3D operator/(Vector3D const& vect2, double x){ return {vect2.x / x, vect2.y / x, vect2.z / x}; }
+	Vector3D operator/(Vector3D const& vect2, float x){ return {vect2.x / x, vect2.y / x, vect2.z / x}; }
 
-	Vector3D operator*(double x, Vector3D const& vect2){ return {vect2.x * x, vect2.y * x,vect2.z * x}; } // overloaded fxn to reflect math for my monkey brain
+	Vector3D operator*(float x, Vector3D const& vect2){ return {vect2.x * x, vect2.y * x,vect2.z * x}; } // overloaded fxn to reflect math for my monkey brain
 
-	Vector3D operator/(double x, Vector3D const& vect2){ return {x / vect2.x, x / vect2.y, x / vect2.z}; }
+	Vector3D operator/(float x, Vector3D const& vect2){ return {x / vect2.x, x / vect2.y, x / vect2.z}; }
 
 	Vector3D& Vector3D::operator+=(const Vector3D& vect){ 
 		this->x += vect.x;

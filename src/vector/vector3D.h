@@ -5,14 +5,14 @@
 namespace Physics{
 
     struct Vector3D {
-        Vector3D(double x, double y, double z);
+        Vector3D(float x, float y, float z);
         ~Vector3D();
         friend Vector3D operator+(Vector3D const& vect1, Vector3D const& vect2);
         friend Vector3D operator-(Vector3D const& vect1, Vector3D const& vect2);
-        friend Vector3D operator*(Vector3D const& vect, double x);
-        friend Vector3D operator/(Vector3D const& vect, double x);
-        friend Vector3D operator*(double x, Vector3D const& vect);
-        friend Vector3D operator/(double x, Vector3D const& vect);
+        friend Vector3D operator*(Vector3D const& vect, float x);
+        friend Vector3D operator/(Vector3D const& vect, float x);
+        friend Vector3D operator*(float x, Vector3D const& vect);
+        friend Vector3D operator/(float x, Vector3D const& vect);
         friend std::ostream& operator<<(std::ostream& os, const Vector3D& v);
 
         Vector3D& operator+=(const Vector3D& vect);
@@ -20,7 +20,7 @@ namespace Physics{
         float magnitude() const;
         Vector3D norm(const Vector3D& vect);
 
-        double x,y,z;
+        float x,y,z;
     };
 
 }
