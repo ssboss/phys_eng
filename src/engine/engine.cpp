@@ -36,7 +36,7 @@ void processInput(GLFWwindow* window){
         glfwSetWindowShouldClose(window, true);
 }
 
-void renderObjects(std::vector<Physics::Particle*> objs, float dt, int width, int height){
+void renderObjects(int width, int height, World* world){
     int success;
     char log[512];
 
@@ -106,7 +106,28 @@ void renderObjects(std::vector<Physics::Particle*> objs, float dt, int width, in
         glBindVertexArray(VAO);
 
         glm::mat4 view {glm::mat4(1.0f)};
-        view = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        // view = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        Physics::Vector3D worldCenter {world->getUpperBounds() + world->getLowerBounds()};
+        glm::vec3 boxCenter {(worldCenter.x, worldCenter.y, worldCenter.z) * 0.5f};
+        Physics::Vector3D worldRange {world->getUpperBounds() + world->getLowerBounds()};
+        glm::vec3 boxRadius {(worldRange.x, worldRange.y, worldRange.z) * 0.5f};
+        float boundRadius {glm::length(boxRadius)};
+
+        float dist {boundRadius / static_cast<float>(sin(glm::radians(45.0f)))};
+        dist *= 1.3f;
+
+        glm::vec3 viewDir {glm::normalize(glm::vec3(0.5f, 1.0f, 0.5f))};
+
+        glm::vec3 eye {boxCenter - (viewDir * dist)};
+
+        view = glm::lookAt(eye, boxCenter, glm::vec3(0,1,0));
+
+
+
+
+
+
+
         glm::mat4 projection {glm::mat4(1.0f)};
         projection = glm::perspective(glm::radians(90.0f), static_cast<float>(width)/static_cast<float>(height), 0.1f, 1000.0f);
         // // trying ortho projection
@@ -115,15 +136,18 @@ void renderObjects(std::vector<Physics::Particle*> objs, float dt, int width, in
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projecLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-        for (auto obj : objs){
+        auto objs {world->getObjs()};
+
+        for (auto obj : *objs){
             glm::mat4 model {glm::mat4(1.0f)};
             model = glm::translate(model, glm::vec3(obj->getCurrPos().x, obj->getCurrPos().y, obj->getCurrPos().z));
             model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f)); // want scale of 0.25, will test and mess around w/
 
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
             glDrawArrays(GL_POINTS, 0, 1);
-            physicsUpdator(obj, {}, dt);
         }
+        // world->update();
+        
 
         glfwSwapBuffers(window);
         glfwPollEvents();

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "vector/vector3D.h"
+#include "vector3D.h"
 
 // custom particle object class
 
