@@ -1,21 +1,19 @@
 #include "particle.h"
 
 namespace Physics{
-    Particle::Particle(Vector3D present_pos,  Vector3D init_force, float init_mass) : curr_pos(present_pos), prev_pos(prev_pos), force(init_force), mass(init_mass) {}
+    Particle::Particle(Vector3D present_pos,  Vector3D init_force, float init_mass, float init_rad) : curr_pos(present_pos), prev_pos(prev_pos), force(init_force), mass(init_mass), radius(init_rad) {}
     Particle::~Particle(){}
     Vector3D Particle::getCurrPos(){return curr_pos;}
     Vector3D Particle::getPrevPos(){return prev_pos;}
     Vector3D Particle::getForce(){return force;}
     Vector3D Particle::getAccel(){return force / mass;}
+    float Particle::getRad(){return radius;}
 
-    void Particle::modCurrPos(Vector3D pos){
-        curr_pos = pos;
-    }
+    void Particle::modCurrPos(Vector3D pos){curr_pos = pos;}
 
-    void Particle::modPrevPos(Vector3D pos){
-        prev_pos = pos;
-    }
+    void Particle::modPrevPos(Vector3D pos){prev_pos = pos;}
 
     void Particle::modForce(Vector3D added_force){force += added_force;}
+
     
 }
