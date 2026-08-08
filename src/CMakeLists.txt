@@ -4,6 +4,7 @@ add_subdirectory(vector)
 add_subdirectory(particle)
 add_subdirectory(physics/kinematics)
 add_subdirectory(physics/dynamics)
+add_subdirectory(core)
 add_subdirectory(world)
 add_subdirectory(engine)
 

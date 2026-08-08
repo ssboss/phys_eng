@@ -1,18 +1,24 @@
 #include "engine.h"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+#include "core.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 
 
-GLFWwindow* DrawWindow(int width, int height){
+void Engine::DrawWindow(){
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    GLFWwindow* window = glfwCreateWindow(width, height, "Particle Simulator", NULL, NULL);
+    window = glfwCreateWindow(width, height, "Particle Simulator", NULL, NULL);
     if(!window){
         std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
-        return NULL;
+        // write exception code here
     }
 
     glfwMakeContextCurrent(window);
@@ -20,27 +26,16 @@ GLFWwindow* DrawWindow(int width, int height){
     
     if(!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)){
         std::cout << "Failed to init GLAD" << std::endl;
-        return NULL;
+        // write exception code here
     }
     glViewport(0,0, width, height);
 
-    return window;
 }
 
-void framebuffer_size_callback(GLFWwindow* window, int height, int width){
-    glViewport(0,0,width,height);
-}
-
-void processInput(GLFWwindow* window){
-    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
-}
-
-void renderObjects(int width, int height, World* world){
+void Engine::renderObjects(RenderInfo* worldInfo){
     int success;
     char log[512];
 
-    GLFWwindow* window {DrawWindow(width, height)};
     // std::vector<Physics::Vector3D> vertices;
     float vertices[] {
         0.0f, 0.0f, 0.0f
@@ -107,9 +102,9 @@ void renderObjects(int width, int height, World* world){
 
         glm::mat4 view {glm::mat4(1.0f)};
         // view = glm::lookAt(glm::vec3(0.0f, 0.0f, 5.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-        Physics::Vector3D worldCenter {world->getUpperBounds() + world->getLowerBounds()};
+        Physics::Vector3D worldCenter {worldInfo->getUpperBounds() + worldInfo->getLowerBounds()};
         glm::vec3 boxCenter {(worldCenter.x, worldCenter.y, worldCenter.z) * 0.5f};
-        Physics::Vector3D worldRange {world->getUpperBounds() + world->getLowerBounds()};
+        Physics::Vector3D worldRange {worldInfo->getUpperBounds() - worldInfo->getLowerBounds()}; // check math here
         glm::vec3 boxRadius {(worldRange.x, worldRange.y, worldRange.z) * 0.5f};
         float boundRadius {glm::length(boxRadius)};
 
@@ -136,17 +131,17 @@ void renderObjects(int width, int height, World* world){
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projecLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-        auto objs {world->getObjs()};
+        
 
-        for (auto obj : *objs){
+        for (unsigned int i{0}; i < worldInfo->getCount(); ++i){
             glm::mat4 model {glm::mat4(1.0f)};
-            model = glm::translate(model, glm::vec3(obj->getCurrPos().x, obj->getCurrPos().y, obj->getCurrPos().z));
+            model = glm::translate(model, glm::vec3(worldInfo->getPos(i).x, worldInfo->getPos(i).y, worldInfo->getPos(i).z));
             model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f)); // want scale of 0.25, will test and mess around w/
 
             glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
             glDrawArrays(GL_POINTS, 0, 1);
         }
-        // world->update();
+        worldInfo->update();
         
 
         glfwSwapBuffers(window);
@@ -155,6 +150,7 @@ void renderObjects(int width, int height, World* world){
 
 }
 
+// helper fxn definitions start here
 std::string loadShader(const char* filepath){
     std::ifstream file(filepath);
     if (!file.is_open()) {
@@ -167,5 +163,13 @@ std::string loadShader(const char* filepath){
     return shaderStream.str();
 }
 
+void framebuffer_size_callback(GLFWwindow* window, int height, int width){
+    glViewport(0,0,width,height);
+}
+
+void processInput(GLFWwindow* window){
+    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, true);
+}
 
 
