@@ -11,11 +11,11 @@ void BoundaryCheck(Physics::Particle* obj);
 
 // calculates position based on acceleration and prev pos using Verlet Integration
 namespace Physics {
-    void step(float dt, Physics::Particle* obj, int width, int height){
+    void step(float dt, Physics::Particle* obj, const Physics::Vector3D worldMax, const Physics::Vector3D worldMin){
         Physics::Vector3D new_pos {0.0,0.0,0.0};
         new_pos = 2 * obj->getCurrPos() - obj->getPrevPos() +  (dt*dt) * obj->getAccel();
         obj->modCurrPos(new_pos);
-        BoundaryCheck(obj, width, height);
+        BoundaryCheck(obj, worldMax, worldMin);
     }
     // checks boundary conditions and updates particle pos if it exceeds bounds of box/window
     void BoundaryCheck(Physics::Particle* obj, const Physics::Vector3D worldMax, const Physics::Vector3D worldMin){
