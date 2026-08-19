@@ -4,4 +4,4 @@ add_library(particle STATIC particle.cpp)
 
 target_link_libraries(particle PUBLIC vector3D)
 
-target_include_directories(particle PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(particle PUBLIC ${CMAKE_SOURCE_DIR}/include)

@@ -37,4 +37,4 @@ if(BUILD_TESTING)
 endif()
 
 add_executable(${PROJECT_NAME} src/main.cpp)
-target_link_libraries(${PROJECT_NAME} PRIVATE engine world core dynamics kinematics particle vector3D)
+target_link_libraries(${PROJECT_NAME} PRIVATE engine world)

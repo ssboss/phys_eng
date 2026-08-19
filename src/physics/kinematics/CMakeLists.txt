@@ -4,4 +4,4 @@ add_library(kinematics STATIC kinematics.cpp)
 
 target_link_libraries(kinematics PUBLIC particle)
 
-target_include_directories(kinematics PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(kinematics PUBLIC ${CMAKE_SOURCE_DIR}/include)
